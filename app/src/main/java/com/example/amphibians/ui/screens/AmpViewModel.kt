@@ -12,7 +12,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.io.IOException
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.lifecycle.viewModelScope
+import com.example.amphibians.AmptApplication
+import com.example.amphibians.model.Amphibian
 import kotlinx.coroutines.launch
+import com.example.amphibians.data.AmphibiansRepository
 
 sealed interface AmphibiansUiState {
     data class Success(val amphibians: List<Amphibian>) : AmphibiansUiState
@@ -47,7 +50,7 @@ class AmphibiansViewModel(private val amphibiansRepository: AmphibiansRepository
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
-                        as AmphibiansApplication)
+                        as AmptApplication)
                 val amphibiansRepository = application.container.amphibiansRepository
                 AmphibiansViewModel(amphibiansRepository = amphibiansRepository)
             }

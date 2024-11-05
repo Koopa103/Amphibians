@@ -1,6 +1,5 @@
 package com.example.amphibians.ui.screens
 
-import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -26,6 +24,9 @@ import coil.request.ImageRequest
 import com.example.amphibians.R
 import java.lang.reflect.Modifier
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import com.example.amphibians.model.Amphibian
 
 
 @Composable
@@ -41,7 +42,7 @@ fun HomeScreen(
     ) {
         when (amphibiansUiState) {
             is AmphibiansUiState.Success ->
-                AmphibiansListScreen(
+                AmphibiansList(
                     amphibians = amphibiansUiState.amphibians,
                     modifier = modifier
                         .padding(
@@ -88,15 +89,13 @@ fun AmphibiansList(
 fun AmphibianCard(
     amphibian: Amphibian,
     modifier: Modifier = Modifier,
-    elevation: Dp = 4.dp,
-    shape: Shape = RoundedCornerShape(8.dp)
+    shape: RoundedCornerShape = RoundedCornerShape(8.dp)
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         shape = shape,
-        elevation = elevation
     ) {
         Column {
             AsyncImage(

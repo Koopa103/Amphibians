@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,21 +16,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.amphibians.R
-import java.lang.reflect.Modifier
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import com.example.amphibians.model.Amphibian
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable
 fun HomeScreen(
-    amphibiansUiState: AmphibiansUiState,
+    amphibiansUiState: StateFlow<AmphibiansUiState>,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
@@ -73,7 +75,8 @@ fun ErrorContent(retryAction: () -> Unit) {
 @Composable
 fun AmphibiansList(
     amphibians: List<Amphibian>,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    modifier: Modifier
 ) {
     LazyColumn(
         contentPadding = contentPadding,
@@ -111,12 +114,10 @@ fun AmphibianCard(
             )
             Text(
                 text = amphibian.name,
-                style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(8.dp)
             )
             Text(
                 text = amphibian.description,
-                style = MaterialTheme.typography.body2,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
